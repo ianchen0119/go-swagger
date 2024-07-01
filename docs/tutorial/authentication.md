@@ -91,7 +91,7 @@ go run ./cmd/auth-sample-server/main.go --port 35307
 Exercise auth:
 
 ```shell
-± ivan@avalon:~  
+± ivan@avalon:~
  » curl -i -H 'Content-Type: application/keyauth.api.v1+json' -H 'X-Token: abcdefuvwxyz' http://127.0.0.1:35307/api/customers
 ```
 ```http
@@ -103,7 +103,7 @@ Content-Length: 57
 "operation customers.GetID has not yet been implemented"
 ```
 ```shell
-± ivan@avalon:~  
+± ivan@avalon:~
  » curl -i -H 'Content-Type: application/keyauth.api.v1+json' -H 'X-Token: abcdefu' http://127.0.0.1:35307/api/customers
 ```
 ```http
@@ -115,4 +115,4 @@ Content-Length: 47
 {"code":401,"message":"incorrect api key auth"}
 ```
 
-[example_code]: https://github.com/go-swagger/go-swagger/tree/master/examples/authentication
+[example_code]: https://github.com/ianchen0119/go-swagger/tree/master/examples/authentication

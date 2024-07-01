@@ -44,7 +44,7 @@ curl -1sLf 'https://dl.cloudsmith.io/public/go-swagger/go-swagger/config.deb.txt
 
 * Install
 ```sh
-sudo apt update 
+sudo apt update
 sudo apt install swagger
 ```
 {{< /tab >}}
@@ -86,7 +86,7 @@ At this moment, we do not support pre-packaged binaries for Windows.
 
 You can also download a binary for your platform from github:
 
-<https://github.com/go-swagger/go-swagger/releases/latest>
+<https://github.com/ianchen0119/go-swagger/releases/latest>
 
 {{<hint info>}}
 We currently release binary builds for the following platforms:
@@ -102,7 +102,7 @@ We currently release binary builds for the following platforms:
 {{</hint>}}
 
 ```sh
-dir=$(mktemp -d) 
+dir=$(mktemp -d)
 download_url=$(curl -s https://api.github.com/repos/go-swagger/go-swagger/releases/latest | \
   jq -r '.assets[] | select(.name | contains("'"$(uname | tr '[:upper:]' '[:lower:]')"'_amd64")) | .browser_download_url')
 

@@ -18,12 +18,12 @@ You may develop on Linux, MacOS or Windows.
 ```sh
 mkdir -p $GOPATH/src/github.com/go-swagger
 cd $GOPATH/src/github.com/go-swagger
-git clone https://github.com/go-swagger/go-swagger
+git clone https://github.com/ianchen0119/go-swagger
 ```
 
 Building and installing go-swagger from source on your system:
 ```sh
-go install github.com/go-swagger/go-swagger/cmd/swagger@latest
+go install github.com/ianchen0119/go-swagger/cmd/swagger@latest
 
 swagger version
 dev
@@ -101,16 +101,16 @@ flowchart TD
     L[go-openapi/inflect]
 
     A--> D
-    A--> J 
-    A--> L 
-    A--> B 
-    A--> C 
-    A--> F 
-    A--> I 
     A--> J
-    A--> K 
-    A--> E 
-    
+    A--> L
+    A--> B
+    A--> C
+    A--> F
+    A--> I
+    A--> J
+    A--> K
+    A--> E
+
     B--> D
     B--> J
     B--> C
@@ -122,23 +122,23 @@ flowchart TD
     C--> D
     C--> F
     C--> K
-    
+
     D--> H
-    D--> F 
+    D--> F
     D--> I
     D--> J
     D--> K
 
-    E--> D 
+    E--> D
     E--> J
-    E--> H 
-    E--> C 
+    E--> H
+    E--> C
     E--> F
     E--> I
     E--> K
 
     F--> H
-    F--> G 
+    F--> G
     F--> K
 
     G--> H

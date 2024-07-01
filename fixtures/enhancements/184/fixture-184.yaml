@@ -1,4 +1,4 @@
-swagger: '2.0'
+swagger: "2.0"
 
 info:
   title: Markdown generator demo
@@ -13,7 +13,7 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   contact:
     name: fred
-    url: https://github.com/go-swagger/go-swagger
+    url: https://github.com/ianchen0119/go-swagger
     email: fred@example.com
 
 externalDocs:
@@ -49,8 +49,8 @@ securityDefinitions:
     authorizationUrl: https://app/auth/authorize
     tokenUrl: https://app/auth/token
     scopes:
-      'read:greeters': Scope to access all greeters
-      'write:greeters': Scope to create or modify greeters
+      "read:greeters": Scope to access all greeters
+      "write:greeters": Scope to create or modify greeters
 
 security:
   - password: []
@@ -132,7 +132,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/greeter'
+              $ref: "#/definitions/greeter"
           examples:
             application/json:
               id: xyz
@@ -153,7 +153,7 @@ paths:
           description: The description of the new greeter
           required: true
           schema:
-            $ref: '#/definitions/greeter'
+            $ref: "#/definitions/greeter"
       consumes:
         - application/json
         - text/plain
@@ -172,7 +172,7 @@ paths:
         - in: body
           name: newGreeterContent
           schema:
-            $ref: '#/definitions/greeter'
+            $ref: "#/definitions/greeter"
       responses:
         200:
           description: Modified
@@ -201,7 +201,7 @@ paths:
               url: https://www.greetings.io/realiased
             type: array
             items:
-              $ref: '#/definitions/realiased'
+              $ref: "#/definitions/realiased"
 
   /oustings:
     parameters:
@@ -238,20 +238,20 @@ paths:
           schema:
             type: array
             items:
-              $ref: '#/definitions/ouster'
+              $ref: "#/definitions/ouster"
 
   /all:
     get:
       summary: Retrieve all things
       security:
-        - token: ['read:greeters']
+        - token: ["read:greeters"]
       responses:
         200:
           description: All in one
           schema:
             type: array
             items:
-              $ref: '#/definitions/anyObject'
+              $ref: "#/definitions/anyObject"
   /some:
     get:
       summary: Retrieve some things
@@ -259,13 +259,13 @@ paths:
         200:
           description: some items
           schema:
-            $ref: '#/definitions/aliasedArray'
+            $ref: "#/definitions/aliasedArray"
         203:
-          description:  nested items
+          description: nested items
           schema:
             type: array
             items:
-              $ref: '#/definitions/aliasedArray'
+              $ref: "#/definitions/aliasedArray"
 
     post:
       summary: Make some things
@@ -326,7 +326,7 @@ paths:
                 description: generic error
                 url: https://www.greetings.io/models/errors-generic
               type: object
-              required: [ code ]
+              required: [code]
               properties:
                 code:
                   type: integer
@@ -370,7 +370,7 @@ paths:
             required: [a]
             properties:
               a:
-                $ref: '#/definitions/greeter'
+                $ref: "#/definitions/greeter"
             additionalProperties: true
 
         204:
@@ -379,7 +379,7 @@ paths:
             type: object
             description: define a map of a model type
             additionalProperties:
-              $ref: '#/definitions/greeter'
+              $ref: "#/definitions/greeter"
 
         401:
           description: map with additionalProperties
@@ -426,7 +426,7 @@ paths:
               url: https://www.greetings.io/models/map-model
             type: object
             additionalProperties:
-              $ref: '#/definitions/greeter'
+              $ref: "#/definitions/greeter"
       responses:
         204:
           description: empty
@@ -434,7 +434,7 @@ paths:
         401:
           description: complex object
           schema:
-            $ref: '#/definitions/objectWithComplexProps'
+            $ref: "#/definitions/objectWithComplexProps"
 
 definitions:
   greeter:
@@ -442,7 +442,7 @@ definitions:
       description: more about greeters
       url: https://www.greetings.io/models/greeter
     type: object
-    required: [id,name]
+    required: [id, name]
     properties:
       id:
         type: string
@@ -463,7 +463,7 @@ definitions:
 
   ouster:
     type: object
-    required: [uid,uname]
+    required: [uid, uname]
     properties:
       uid:
         type: string
@@ -477,8 +477,8 @@ definitions:
       description: any kind of greeter or ouster
       url: https://www.greetings.io/models/anyObject
     allOf:
-      - $ref: '#/definitions/greeter'
-      - $ref: '#/definitions/ouster'
+      - $ref: "#/definitions/greeter"
+      - $ref: "#/definitions/ouster"
 
   aliasedArray:
     type: array
@@ -509,7 +509,7 @@ definitions:
 
   primitive:
     type: string
-    enum: [a,b,c]
+    enum: [a, b, c]
 
   intPrimitive:
     type: integer
@@ -517,18 +517,18 @@ definitions:
     enum: [1, 2, 3]
 
   realiased:
-    $ref: '#/definitions/primitive'
+    $ref: "#/definitions/primitive"
 
   objectWithComplexProps:
     type: object
     required: [prop1, prop2]
     properties:
       prop1:
-        $ref: '#/definitions/greeter'
+        $ref: "#/definitions/greeter"
       prop2:
-        $ref: '#/definitions/ouster'
+        $ref: "#/definitions/ouster"
       prop3:
-        $ref: '#/definitions/realiased'
+        $ref: "#/definitions/realiased"
       prop4:
         type: object
         properties:
@@ -559,19 +559,19 @@ definitions:
             description: second member string
             default: xyz
         additionalItems:
-          $ref: '#/definitions/greeter'
+          $ref: "#/definitions/greeter"
       prop7:
         type: array
         items:
-          - $ref: '#/definitions/greeter'
-          - $ref: '#/definitions/ouster'
+          - $ref: "#/definitions/greeter"
+          - $ref: "#/definitions/ouster"
         additionalItems:
           type: string
       prop8:
         type: array
         items:
-          - $ref: '#/definitions/greeter'
-          - $ref: '#/definitions/ouster'
+          - $ref: "#/definitions/greeter"
+          - $ref: "#/definitions/ouster"
           - type: integer
         additionalItems:
           type: object

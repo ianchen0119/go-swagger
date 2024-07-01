@@ -1,62 +1,62 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
-  title: 'x-go-type issues'
-  version: '1.0'
+  title: "x-go-type issues"
+  version: "1.0"
 paths:
   /users_arr_ref:
     get:
       parameters:
-      - name: bodyUser
-        in: body
-        schema:
-          $ref: '#/definitions/User'
+        - name: bodyUser
+          in: body
+          schema:
+            $ref: "#/definitions/User"
       responses:
         200:
           description: OK
           schema:
-            $ref: '#/definitions/UsersArrayRef'
+            $ref: "#/definitions/UsersArrayRef"
         201:
           description: OK
           schema:
-            $ref: '#/definitions/User'
+            $ref: "#/definitions/User"
   /users_arr_flat:
     get:
       parameters:
-      - name: bodyUser
-        in: body
-        schema:
-          type: array
-          items:
-            $ref: '#/definitions/User'
+        - name: bodyUser
+          in: body
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
       responses:
         200:
           description: OK
           schema:
-            $ref: '#/definitions/UsersArrayFlat'
+            $ref: "#/definitions/UsersArrayFlat"
         201:
           description: OK
           schema:
-            $ref: '#/definitions/Users'
+            $ref: "#/definitions/Users"
         203:
           description: OK
           schema:
             type: array
             items:
-              $ref: '#/definitions/Users'
+              $ref: "#/definitions/Users"
   /user_obj_ref:
     get:
       responses:
         200:
           description: OK
           schema:
-            $ref: '#/definitions/UserObjectRef'
+            $ref: "#/definitions/UserObjectRef"
   /user_obj_flat:
     get:
       responses:
         200:
           description: OK
           schema:
-            $ref: '#/definitions/UserObjectFlat'
+            $ref: "#/definitions/UserObjectFlat"
 definitions:
   User:
     type: object
@@ -69,20 +69,20 @@ definitions:
       type: ExtUser
       import:
         alias: myalias0
-        package: 'github.com/go-swagger/go-swagger/fixtures/bugs/1719/pkg/models'
+        package: "github.com/ianchen0119/go-swagger/fixtures/bugs/1719/pkg/models"
   Users:
     type: array
     items:
-       $ref: '#/definitions/User'
+      $ref: "#/definitions/User"
   UsersArrayRef:
     type: array
     items:
-       $ref: '#/definitions/User'
+      $ref: "#/definitions/User"
     x-go-type:
       type: ExtUsersArrayRef
       import:
         alias: myalias1
-        package: 'github.com/go-swagger/go-swagger/fixtures/bugs/1719/pkg/models'
+        package: "github.com/ianchen0119/go-swagger/fixtures/bugs/1719/pkg/models"
   UsersArrayFlat:
     type: array
     items:
@@ -96,14 +96,14 @@ definitions:
       type: ExtUsersArrayFlat
       import:
         alias: myalias2
-        package: 'github.com/go-swagger/go-swagger/fixtures/bugs/1719/pkg/models'
+        package: "github.com/ianchen0119/go-swagger/fixtures/bugs/1719/pkg/models"
   UserObjectRef:
-    $ref: '#/definitions/User'
+    $ref: "#/definitions/User"
     x-go-type:
       type: ExtUser
       import:
         alias: myalias3
-        package: 'github.com/go-swagger/go-swagger/fixtures/bugs/1719/pkg/models2'
+        package: "github.com/ianchen0119/go-swagger/fixtures/bugs/1719/pkg/models2"
   UserObjectFlat:
     type: object
     properties:
@@ -115,4 +115,4 @@ definitions:
       type: ExtUser
       import:
         alias: myalias4
-        package: 'github.com/go-swagger/go-swagger/fixtures/bugs/1719/pkg/models2'
+        package: "github.com/ianchen0119/go-swagger/fixtures/bugs/1719/pkg/models2"

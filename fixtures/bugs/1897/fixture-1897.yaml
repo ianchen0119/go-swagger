@@ -70,6 +70,5 @@ definitions:
     x-go-type:
       type: Error
       import:
-        package: github.com/go-swagger/go-swagger/fixtures/bugs/1897/external
+        package: github.com/ianchen0119/go-swagger/fixtures/bugs/1897/external
         alias: swaggermodels
-

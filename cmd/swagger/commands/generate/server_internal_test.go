@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/go-swagger/go-swagger/generator"
+	"github.com/ianchen0119/go-swagger/generator"
 	"github.com/stretchr/testify/assert"
 )
 

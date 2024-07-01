@@ -18,17 +18,17 @@ module:
     - path: "go-swagger-assets"
     - path: "go-swagger-static"
   mounts:
-    - source: layouts              # <- mounts extra shortcodes
+    - source: layouts # <- mounts extra shortcodes
       target: layouts
-    - source: '../../../docs'      # <- mounts doc source
-      target: 'content'
-      excludeFiles: 'presentations/**'
-    - source: 'themes/go-swagger-assets'  # <- mounts extra assets (e.g. scss)
-      target: 'assets'
-    - source: 'themes/go-swagger-static'  # <- mount images (e.g. logo)
-      target: 'static'
-    - source: '../../../docs/presentations'    # <- mount presentations as raw HTML bundles
-      target: 'static/presentations'
+    - source: "../../../docs" # <- mounts doc source
+      target: "content"
+      excludeFiles: "presentations/**"
+    - source: "themes/go-swagger-assets" # <- mounts extra assets (e.g. scss)
+      target: "assets"
+    - source: "themes/go-swagger-static" # <- mount images (e.g. logo)
+      target: "static"
+    - source: "../../../docs/presentations" # <- mount presentations as raw HTML bundles
+      target: "static/presentations"
 
 sitemap:
   changeFreq: ""
@@ -41,7 +41,7 @@ enableGitInfo: true
 menu:
   before:
     - name: "Find go-swagger on github"
-      url: "https://github.com/go-swagger/go-swagger"
+      url: "https://github.com/ianchen0119/go-swagger"
       weight: 1
     - name: ""
       pre: "<hr>"
@@ -110,11 +110,11 @@ params:
   # (Optional, default docs) Specify root page to render child pages as menu.
   # Page is resolved by .GetPage function: https://gohugo.io/functions/getpage/
   # For backward compatibility you can set '*' to render all sections to menu. Acts same as '/'
-  BookSection: '*'
+  BookSection: "*"
 
   # Set source repository location.
   # Used for 'Last Modified' and 'Edit this page' links.
-  BookRepo: 'https://github.com/go-swagger/go-swagger'
+  BookRepo: "https://github.com/ianchen0119/go-swagger"
 
   # (Optional, default 'commit') Specifies commit portion of the link to the page's last modified
   # commit hash for 'doc' page type.

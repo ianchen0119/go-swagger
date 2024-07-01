@@ -18,7 +18,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/go-swagger/go-swagger/generator"
+	"github.com/ianchen0119/go-swagger/generator"
 )
 
 type serverOptions struct {

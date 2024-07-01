@@ -16,8 +16,8 @@ import (
 
 	"github.com/go-openapi/runtime"
 	httptransport "github.com/go-openapi/runtime/client"
-	"github.com/go-swagger/go-swagger/fixtures/bugs/883/gen-fixture-883/client"
-	"github.com/go-swagger/go-swagger/fixtures/bugs/883/gen-fixture-883/client/operations"
+	"github.com/ianchen0119/go-swagger/fixtures/bugs/883/gen-fixture-883/client"
+	"github.com/ianchen0119/go-swagger/fixtures/bugs/883/gen-fixture-883/client/operations"
 )
 
 // Buffer knows how to UnmarshalText

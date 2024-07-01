@@ -78,7 +78,7 @@ Help Options:
 ```
 
 ### Build a CLI
-There is an example cli and tutorial provided at: https://github.com/go-swagger/go-swagger/tree/master/examples/cli
+There is an example cli and tutorial provided at: https://github.com/ianchen0119/go-swagger/tree/master/examples/cli
 
 To generate a CLI:
 ```
@@ -88,7 +88,7 @@ Cli is a wrapper of generated client code (see [client](./client.md) for details
 
 To build the generated CLI code:
 ```
-go build cmd/<app-name>/main.go 
+go build cmd/<app-name>/main.go
 ```
 Or install in your go/bin
 ```

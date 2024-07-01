@@ -9,8 +9,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/go-swagger/go-swagger/examples/cli/client/operations"
-	"github.com/go-swagger/go-swagger/examples/cli/models"
+	"github.com/ianchen0119/go-swagger/examples/cli/client/operations"
+	"github.com/ianchen0119/go-swagger/examples/cli/models"
 
 	"github.com/go-openapi/swag"
 	"github.com/spf13/cobra"

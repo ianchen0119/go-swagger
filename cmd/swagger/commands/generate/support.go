@@ -17,7 +17,7 @@ package generate
 import (
 	"log"
 
-	"github.com/go-swagger/go-swagger/generator"
+	"github.com/ianchen0119/go-swagger/generator"
 )
 
 // Support generates the supporting files

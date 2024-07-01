@@ -1,10 +1,10 @@
 consumes:
-- application/json
+  - application/json
 produces:
-- application/json
+  - application/json
 schemes:
-- https
-swagger: '2.0'
+  - https
+swagger: "2.0"
 info:
   description: |-
     the purpose of this application is to provide an application
@@ -16,26 +16,26 @@ paths:
   "/admin/bookings/":
     get:
       consumes:
-      - application/json
+        - application/json
       produces:
-      - application/json
+        - application/json
       schemes:
-      - http
-      - https
+        - http
+        - https
       tags:
-      - booking
+        - booking
       summary: Bookings lists all the appointments that have been made on the site.
       operationId: Bookings
       responses:
-        '200':
+        "200":
           "$ref": "#/responses/BookingResponse"
 definitions:
   Booking:
     description: A Booking in the system
     type: object
     required:
-    - id
-    - Subject
+      - id
+      - Subject
     properties:
       Subject:
         description: Subject the subject of this booking
@@ -46,7 +46,7 @@ definitions:
         format: int64
         x-go-name: ID
         readOnly: true
-    x-go-package: github.com/go-swagger/go-swagger/vendor/github.com/go-swagger/scan-repo-boundary/makeplans
+    x-go-package: github.com/ianchen0119/go-swagger/vendor/github.com/go-swagger/scan-repo-boundary/makeplans
   Customer:
     type: object
     title: Customer of the site.
@@ -54,7 +54,7 @@ definitions:
       name:
         type: string
         x-go-name: Name
-    x-go-package: github.com/go-swagger/go-swagger/fixtures/goparsing/spec
+    x-go-package: github.com/ianchen0119/go-swagger/fixtures/goparsing/spec
   DateRange:
     description: |-
       DateRange represents a scheduled appointments time
@@ -67,7 +67,7 @@ definitions:
       start:
         type: string
         x-go-name: Start
-    x-go-package: github.com/go-swagger/go-swagger/fixtures/goparsing/spec
+    x-go-package: github.com/ianchen0119/go-swagger/fixtures/goparsing/spec
 responses:
   BookingResponse:
     description: BookingResponse represents a scheduled appointment

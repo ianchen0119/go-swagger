@@ -6,45 +6,45 @@ paths:
   "/":
     post:
       tags:
-      - hotspot
+        - hotspot
       summary: Create a Hotspot
       operationId: "CreateHotspot"
       consumes:
-      - application/json
+        - application/json
       produces:
-      - application/json
+        - application/json
       parameters:
-      - in: body
-        name: Hotspot
-        required: false
-        schema:
-          $ref: '#/definitions/Hotspot'
+        - in: body
+          name: Hotspot
+          required: false
+          schema:
+            $ref: "#/definitions/Hotspot"
       responses:
         201:
           description: Hotspot created.
           schema:
-            $ref: '#/definitions/Hotspot'
+            $ref: "#/definitions/Hotspot"
         400:
           description: Bad request.
           schema:
-            $ref: '#/definitions/Error'
+            $ref: "#/definitions/Error"
         422:
           description: Unprocessable entity
           schema:
-            $ref: '#/definitions/Error'
+            $ref: "#/definitions/Error"
         500:
           description: Unexpected error.
           schema:
-            $ref: '#/definitions/Error'
+            $ref: "#/definitions/Error"
   "/embedded":
     get:
       tags:
-      - embedded
+        - embedded
       responses:
         201:
           description: embedded type
           schema:
-            $ref: '#/definitions/Embedded'
+            $ref: "#/definitions/Embedded"
 
 definitions:
   Error:
@@ -54,7 +54,7 @@ definitions:
     x-go-type:
       type: Hotspot
       import:
-        package: github.com/go-swagger/go-swagger/fixtures/enhancements/2224/external
+        package: github.com/ianchen0119/go-swagger/fixtures/enhancements/2224/external
       hints:
         kind: object
     x-nullable: true
@@ -64,14 +64,14 @@ definitions:
     x-go-type:
       type: Hotspot
       import:
-        package: github.com/go-swagger/go-swagger/fixtures/enhancements/2224/external
+        package: github.com/ianchen0119/go-swagger/fixtures/enhancements/2224/external
     x-nullable: true
 
   ExternalArray:
     x-go-type:
       type: HotArray
       import:
-        package: github.com/go-swagger/go-swagger/fixtures/enhancements/2224/external
+        package: github.com/ianchen0119/go-swagger/fixtures/enhancements/2224/external
         hints:
           kind: array
     x-nullable: true
@@ -83,14 +83,14 @@ definitions:
     x-go-type:
       type: HotArray
       import:
-        package: github.com/go-swagger/go-swagger/fixtures/enhancements/2224/external
+        package: github.com/ianchen0119/go-swagger/fixtures/enhancements/2224/external
     x-nullable: true
 
   ExternalPrimitive:
     x-go-type:
       type: Time
       import:
-        package: github.com/go-swagger/go-swagger/fixtures/enhancements/2224/external
+        package: github.com/ianchen0119/go-swagger/fixtures/enhancements/2224/external
         hints:
           kind: primitive
           novalidation: true
@@ -100,7 +100,7 @@ definitions:
     x-go-type:
       type: Hotspot
       import:
-        package: github.com/go-swagger/go-swagger/fixtures/enhancements/2224/external
+        package: github.com/ianchen0119/go-swagger/fixtures/enhancements/2224/external
       hints:
         kind: object
       embedded: true
