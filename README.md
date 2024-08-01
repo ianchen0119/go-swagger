@@ -51,7 +51,7 @@ There is still much room for improvement: contributors and PR's are welcome. You
 ## Installing
 
 ```sh
-go install github.com/ianchen0119/go-swagger/cmd/swagger@latest
+go install github.com/ianchen0119/go-swagger/cmd/swagger@main
 ```
 
 `go-swagger` is also available as binary or docker releases as well as from source: [more details](https://goswagger.io/go-swagger/install).
