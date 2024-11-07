@@ -101,6 +101,7 @@ type GenSchema struct {
 	ExtraImports               map[string]string // non-standard imports detected when using external types
 	ExternalDocs               *spec.ExternalDocumentation
 	WantsRootedErrorPath       bool
+	NoValidator                bool
 }
 
 func (g GenSchema) renderMarshalTag() string {

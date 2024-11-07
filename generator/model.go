@@ -255,6 +255,7 @@ func makeGenDefinitionHierarchy(name, pkg, container string, schema spec.Schema,
 		WithXML:                    opts.WithXML,
 		StructTags:                 opts.StructTags,
 		WantsRootedErrorPath:       opts.WantsRootedErrorPath,
+		NoValidator:                opts.NoValidator,
 	}
 	if err := pg.makeGenSchema(); err != nil {
 		return nil, fmt.Errorf("could not generate schema for %s: %w", name, err)
@@ -449,6 +450,7 @@ type schemaGenContext struct {
 	IncludeModel               bool
 	StrictAdditionalProperties bool
 	WantsRootedErrorPath       bool
+	NoValidator                bool
 	WithXML                    bool
 	Index                      int
 
@@ -2010,6 +2012,7 @@ func (sg *schemaGenContext) makeGenSchema() error {
 	sg.GenSchema.StructTags = sg.StructTags
 	sg.GenSchema.ExtraImports = make(map[string]string)
 	sg.GenSchema.WantsRootedErrorPath = sg.WantsRootedErrorPath
+	sg.GenSchema.NoValidator = sg.NoValidator
 	sg.GenSchema.IsElem = sg.IsElem
 	sg.GenSchema.IsProperty = sg.IsProperty
 
@@ -2058,6 +2061,12 @@ func (sg *schemaGenContext) makeGenSchema() error {
 
 	// include context validations
 	sg.GenSchema.HasContextValidations = sg.GenSchema.HasContextValidations || hasContextValidations(&sg.Schema) && !tpe.IsInterface && !tpe.IsStream && !tpe.SkipExternalValidation
+
+	// skip validator generating for this schema
+	if sg.GenSchema.NoValidator {
+		sg.GenSchema.HasValidations = false
+		sg.GenSchema.HasContextValidations = false
+	}
 
 	// usage of a polymorphic base type is rendered with getter funcs on private properties.
 	// In the case of aliased types, the value expression remains unchanged to the receiver.
