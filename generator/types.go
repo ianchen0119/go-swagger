@@ -1188,6 +1188,12 @@ func (rt *resolvedType) setExtensions(schema *spec.Schema, origType string) {
 		}
 		rt.Extensions[xGoCustomTag] = customTag
 	}
+	if isNullable, found := schema.Extensions[xNullable]; found {
+		if rt.Extensions == nil {
+			rt.Extensions = make(spec.Extensions)
+		}
+		rt.Extensions[xNullable] = isNullable
+	}
 }
 
 func (rt *resolvedType) setIsEmptyOmitted(schema *spec.Schema, tpe string) {
