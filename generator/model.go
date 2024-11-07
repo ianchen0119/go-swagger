@@ -130,7 +130,6 @@ func (m *definitionGenerator) Generate() error {
 	}
 
 	if m.opts.IncludeModel {
-		log.Println("including additional model")
 		if err := m.generateModel(mod); err != nil {
 			return fmt.Errorf("could not generate model: %w", err)
 		}
@@ -1288,6 +1287,18 @@ func (sg *schemaGenContext) buildAdditionalProperties() error {
 		return nil
 	}
 
+	if addp.Schema.Items != nil {
+		if addp.Schema.Items.Schema != nil {
+			tmp := addp.Schema.Items.Schema
+			if isNullable, found := tmp.Extensions[xNullable]; found {
+				nullable, ok := isNullable.(bool)
+				if ok {
+					sg.GenSchema.IsNullable = nullable
+				}
+			}
+		}
+	}
+
 	if !sg.GenSchema.IsMap && (sg.GenSchema.IsAdditionalProperties && sg.Named) {
 		// we have a complex object with an AdditionalProperties schema
 
@@ -2050,7 +2061,7 @@ func (sg *schemaGenContext) makeGenSchema() error {
 		return err
 	}
 
-	debugLog("gschema rrequired: %t, nullable: %t", sg.GenSchema.Required, sg.GenSchema.IsNullable)
+	debugLog("gschema required: %t, nullable: %t", sg.GenSchema.Required, sg.GenSchema.IsNullable)
 	tpe.IsNullable = tpe.IsNullable || nullableOverride
 	sg.GenSchema.resolvedType = tpe
 	sg.GenSchema.IsBaseType = tpe.IsBaseType
@@ -2159,6 +2170,9 @@ func (sg *schemaGenContext) makeGenSchema() error {
 		return err
 	}
 
+	if !sg.GenSchema.IsNullable && sg.GenSchema.IsMap {
+		sg.GenSchema.GoType = strings.Replace(sg.GenSchema.GoType, "*", "", 1)
+	}
 	sg.buildMapOfNullable(nil)
 
 	// extra serializers & interfaces
@@ -2176,7 +2190,7 @@ func (sg *schemaGenContext) makeGenSchema() error {
 	sg.GenSchema.WantsMarshalBinary = !(gs.IsInterface || gs.IsStream || gs.IsBaseType) &&
 		(gs.IsTuple || gs.IsComplexObject || gs.IsAdditionalProperties || (gs.IsPrimitive && gs.IsAliased && gs.IsCustomFormatter && !strings.Contains(gs.Zero(), `("`)))
 
-	debugLog("finished gen schema for %q", sg.Name)
+	debugLog("finished gen schema for %s", sg.Name)
 
 	return nil
 }
