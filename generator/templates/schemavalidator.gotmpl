@@ -865,7 +865,7 @@ func ({{ .ReceiverName }} *{{ if .IsExported }}{{ pascalize .Name }}{{ else }}{{
 }
     {{- end }}
   {{ end }}
-// Validate validates this {{ humanize .Name }}
+{{ if not .NoValidator }}// Validate validates this {{ humanize .Name }}
 func ({{.ReceiverName }} {{ if or .IsTuple .IsComplexObject .IsAdditionalProperties }}*{{ end }}{{ if .Discriminates }}{{ camelize .Name }}{{ else if .IsExported }}{{ pascalize .Name }}{{ else }}{{ .Name }}{{ end }}) Validate(formats strfmt.Registry) error {
   var res []error
   {{ template "minmaxProperties" .}}
@@ -924,7 +924,7 @@ func ({{.ReceiverName }} {{ if or .IsTuple .IsComplexObject .IsAdditionalPropert
     return errors.CompositeValidationError(res...)
   }
   return nil
-}
+}{{ end }}
 
   {{ range .Properties }}
     {{ if or .Required .HasValidations }}

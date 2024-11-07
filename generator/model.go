@@ -2088,6 +2088,9 @@ func (sg *schemaGenContext) makeGenSchema() error {
 		sg.GenSchema.Required = sg.Required
 		// assume we validate everything but interface and io.Reader - validation may be disabled by using the noValidation hint
 		sg.GenSchema.HasValidations = !(tpe.IsInterface || tpe.IsStream || tpe.SkipExternalValidation)
+		if sg.GenSchema.NoValidator {
+			sg.GenSchema.HasValidations = false
+		}
 		sg.GenSchema.IsAliased = sg.GenSchema.HasValidations
 
 		log.Printf("INFO: type %s is external, with inferred spec type %s, referred to as %s", sg.GenSchema.Name, sg.GenSchema.GoType, extType)
