@@ -829,7 +829,7 @@ func (sg *schemaGenContext) buildProperties() error {
 				if rsch == nil {
 					return errors.New("spec.ResolveRef returned nil schema")
 				}
-				if rsch != nil && rsch.Ref.String() != "" {
+				if rsch.Ref.String() != "" {
 					ref = rsch.Ref
 					continue
 				}
@@ -1486,6 +1486,18 @@ func (sg *schemaGenContext) buildArray() error {
 	elProp.GenSchema.Suffix = "Items"
 
 	elProp.GenSchema.IsNullable = tpe.IsNullable && !tpe.HasDiscriminator
+	if sg.Schema.Items != nil {
+		if sg.Schema.Items.Schema != nil {
+			tmp := sg.Schema.Items.Schema
+			if isNullable, found := tmp.Extensions[xNullable]; found {
+				nullable, ok := isNullable.(bool)
+				if ok {
+					elProp.GenSchema.IsNullable = nullable
+				}
+			}
+		}
+	}
+
 	if elProp.GenSchema.IsNullable {
 		sg.GenSchema.GoType = "[]*" + elProp.GenSchema.GoType
 	} else {
