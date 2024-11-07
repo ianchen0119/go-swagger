@@ -130,7 +130,6 @@ func (m *definitionGenerator) Generate() error {
 	}
 
 	if m.opts.IncludeModel {
-		log.Println("including additional model")
 		if err := m.generateModel(mod); err != nil {
 			return fmt.Errorf("could not generate model: %w", err)
 		}
@@ -255,6 +254,7 @@ func makeGenDefinitionHierarchy(name, pkg, container string, schema spec.Schema,
 		WithXML:                    opts.WithXML,
 		StructTags:                 opts.StructTags,
 		WantsRootedErrorPath:       opts.WantsRootedErrorPath,
+		NoValidator:                opts.NoValidator,
 	}
 	if err := pg.makeGenSchema(); err != nil {
 		return nil, fmt.Errorf("could not generate schema for %s: %w", name, err)
@@ -449,6 +449,7 @@ type schemaGenContext struct {
 	IncludeModel               bool
 	StrictAdditionalProperties bool
 	WantsRootedErrorPath       bool
+	NoValidator                bool
 	WithXML                    bool
 	Index                      int
 
@@ -829,7 +830,7 @@ func (sg *schemaGenContext) buildProperties() error {
 				if rsch == nil {
 					return errors.New("spec.ResolveRef returned nil schema")
 				}
-				if rsch != nil && rsch.Ref.String() != "" {
+				if rsch.Ref.String() != "" {
 					ref = rsch.Ref
 					continue
 				}
@@ -1286,6 +1287,18 @@ func (sg *schemaGenContext) buildAdditionalProperties() error {
 		return nil
 	}
 
+	if addp.Schema.Items != nil {
+		if addp.Schema.Items.Schema != nil {
+			tmp := addp.Schema.Items.Schema
+			if isNullable, found := tmp.Extensions[xNullable]; found {
+				nullable, ok := isNullable.(bool)
+				if ok {
+					sg.GenSchema.IsNullable = nullable
+				}
+			}
+		}
+	}
+
 	if !sg.GenSchema.IsMap && (sg.GenSchema.IsAdditionalProperties && sg.Named) {
 		// we have a complex object with an AdditionalProperties schema
 
@@ -1486,6 +1499,18 @@ func (sg *schemaGenContext) buildArray() error {
 	elProp.GenSchema.Suffix = "Items"
 
 	elProp.GenSchema.IsNullable = tpe.IsNullable && !tpe.HasDiscriminator
+	if sg.Schema.Items != nil {
+		if sg.Schema.Items.Schema != nil {
+			tmp := sg.Schema.Items.Schema
+			if isNullable, found := tmp.Extensions[xNullable]; found {
+				nullable, ok := isNullable.(bool)
+				if ok {
+					elProp.GenSchema.IsNullable = nullable
+				}
+			}
+		}
+	}
+
 	if elProp.GenSchema.IsNullable {
 		sg.GenSchema.GoType = "[]*" + elProp.GenSchema.GoType
 	} else {
@@ -1998,6 +2023,7 @@ func (sg *schemaGenContext) makeGenSchema() error {
 	sg.GenSchema.StructTags = sg.StructTags
 	sg.GenSchema.ExtraImports = make(map[string]string)
 	sg.GenSchema.WantsRootedErrorPath = sg.WantsRootedErrorPath
+	sg.GenSchema.NoValidator = sg.NoValidator
 	sg.GenSchema.IsElem = sg.IsElem
 	sg.GenSchema.IsProperty = sg.IsProperty
 
@@ -2035,7 +2061,7 @@ func (sg *schemaGenContext) makeGenSchema() error {
 		return err
 	}
 
-	debugLog("gschema rrequired: %t, nullable: %t", sg.GenSchema.Required, sg.GenSchema.IsNullable)
+	debugLog("gschema required: %t, nullable: %t", sg.GenSchema.Required, sg.GenSchema.IsNullable)
 	tpe.IsNullable = tpe.IsNullable || nullableOverride
 	sg.GenSchema.resolvedType = tpe
 	sg.GenSchema.IsBaseType = tpe.IsBaseType
@@ -2046,6 +2072,12 @@ func (sg *schemaGenContext) makeGenSchema() error {
 
 	// include context validations
 	sg.GenSchema.HasContextValidations = sg.GenSchema.HasContextValidations || hasContextValidations(&sg.Schema) && !tpe.IsInterface && !tpe.IsStream && !tpe.SkipExternalValidation
+
+	// skip validator generating for this schema
+	if sg.GenSchema.NoValidator {
+		sg.GenSchema.HasValidations = false
+		sg.GenSchema.HasContextValidations = false
+	}
 
 	// usage of a polymorphic base type is rendered with getter funcs on private properties.
 	// In the case of aliased types, the value expression remains unchanged to the receiver.
@@ -2067,6 +2099,9 @@ func (sg *schemaGenContext) makeGenSchema() error {
 		sg.GenSchema.Required = sg.Required
 		// assume we validate everything but interface and io.Reader - validation may be disabled by using the noValidation hint
 		sg.GenSchema.HasValidations = !(tpe.IsInterface || tpe.IsStream || tpe.SkipExternalValidation)
+		if sg.GenSchema.NoValidator {
+			sg.GenSchema.HasValidations = false
+		}
 		sg.GenSchema.IsAliased = sg.GenSchema.HasValidations
 
 		log.Printf("INFO: type %s is external, with inferred spec type %s, referred to as %s", sg.GenSchema.Name, sg.GenSchema.GoType, extType)
@@ -2135,6 +2170,9 @@ func (sg *schemaGenContext) makeGenSchema() error {
 		return err
 	}
 
+	if !sg.GenSchema.IsNullable && sg.GenSchema.IsMap {
+		sg.GenSchema.GoType = strings.Replace(sg.GenSchema.GoType, "*", "", 1)
+	}
 	sg.buildMapOfNullable(nil)
 
 	// extra serializers & interfaces
@@ -2152,7 +2190,7 @@ func (sg *schemaGenContext) makeGenSchema() error {
 	sg.GenSchema.WantsMarshalBinary = !(gs.IsInterface || gs.IsStream || gs.IsBaseType) &&
 		(gs.IsTuple || gs.IsComplexObject || gs.IsAdditionalProperties || (gs.IsPrimitive && gs.IsAliased && gs.IsCustomFormatter && !strings.Contains(gs.Zero(), `("`)))
 
-	debugLog("finished gen schema for %q", sg.Name)
+	debugLog("finished gen schema for %s", sg.Name)
 
 	return nil
 }
