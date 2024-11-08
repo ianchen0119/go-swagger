@@ -102,6 +102,7 @@ type GenSchema struct {
 	ExternalDocs               *spec.ExternalDocumentation
 	WantsRootedErrorPath       bool
 	NoValidator                bool
+	NoMarshaler                bool
 }
 
 func (g GenSchema) renderMarshalTag() string {

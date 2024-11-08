@@ -352,6 +352,7 @@ type GenOptsCommon struct {
 	AcceptDefinitionsOnly  bool
 	WantsRootedErrorPath   bool
 	NoValidator            bool
+	NoMarshaler            bool
 
 	templates *Repository // a shallow clone of the global template repository
 }

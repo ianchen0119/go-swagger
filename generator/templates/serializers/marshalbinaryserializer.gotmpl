@@ -1,5 +1,5 @@
 {{ define "marshalBinarySerializer" }}
-// MarshalBinary interface implementation
+{{ if not .NoMarshaler }}// MarshalBinary interface implementation
 func ({{.ReceiverName}} *{{ pascalize .Name }}) MarshalBinary() ([]byte, error) {
   if {{ .ReceiverName }} == nil {
     return nil, nil
@@ -15,5 +15,5 @@ func ({{.ReceiverName}} *{{ pascalize .Name }}) UnmarshalBinary(b []byte) error 
   }
   *{{ .ReceiverName }} = res
   return nil
-}
+}{{ end }}
 {{- end }}

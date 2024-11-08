@@ -255,6 +255,7 @@ func makeGenDefinitionHierarchy(name, pkg, container string, schema spec.Schema,
 		StructTags:                 opts.StructTags,
 		WantsRootedErrorPath:       opts.WantsRootedErrorPath,
 		NoValidator:                opts.NoValidator,
+		NoMarshaler:                opts.NoMarshaler,
 	}
 	if err := pg.makeGenSchema(); err != nil {
 		return nil, fmt.Errorf("could not generate schema for %s: %w", name, err)
@@ -450,6 +451,7 @@ type schemaGenContext struct {
 	StrictAdditionalProperties bool
 	WantsRootedErrorPath       bool
 	NoValidator                bool
+	NoMarshaler                bool
 	WithXML                    bool
 	Index                      int
 
@@ -2024,6 +2026,7 @@ func (sg *schemaGenContext) makeGenSchema() error {
 	sg.GenSchema.ExtraImports = make(map[string]string)
 	sg.GenSchema.WantsRootedErrorPath = sg.WantsRootedErrorPath
 	sg.GenSchema.NoValidator = sg.NoValidator
+	sg.GenSchema.NoMarshaler = sg.NoMarshaler
 	sg.GenSchema.IsElem = sg.IsElem
 	sg.GenSchema.IsProperty = sg.IsProperty
 
