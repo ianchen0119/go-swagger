@@ -1197,6 +1197,10 @@ func (rt *resolvedType) setExtensions(schema *spec.Schema, origType string) {
 }
 
 func (rt *resolvedType) setIsEmptyOmitted(schema *spec.Schema, tpe string) {
+	if AlwaysOmitEmpty {
+		rt.IsEmptyOmitted = true
+		return
+	}
 	if v, found := schema.Extensions[xOmitEmpty]; found {
 		omitted, cast := v.(bool)
 		rt.IsEmptyOmitted = omitted && cast

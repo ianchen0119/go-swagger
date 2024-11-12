@@ -32,6 +32,7 @@ type modelOptions struct {
 	RootedErrorPath            bool     `long:"rooted-error-path" description:"extends validation errors with the type name instead of an empty path, in the case of arrays and maps"`
 	NoValidator                bool     `long:"no-validator" description:"when present will not generate the model validator"`
 	NoMarshaler                bool     `long:"no-marshaler" description:"when present will not generate the model marshaler"`
+	AlwaysOmitEmpty            bool     `long:"always-omit-empty" description:"Always insert omitempty in attribute's flags"`
 }
 
 func (mo modelOptions) apply(opts *generator.GenOpts) {
@@ -45,6 +46,7 @@ func (mo modelOptions) apply(opts *generator.GenOpts) {
 	opts.WantsRootedErrorPath = mo.RootedErrorPath
 	opts.NoValidator = mo.NoValidator
 	opts.NoMarshaler = mo.NoMarshaler
+	opts.AlwaysOmitEmpty = mo.AlwaysOmitEmpty
 }
 
 // WithModels adds the model options group.

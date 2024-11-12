@@ -250,8 +250,12 @@ func (a *appGenerator) makeSecuritySchemes() GenSecuritySchemes {
 	return gatherSecuritySchemes(requiredSecuritySchemes, a.Name, a.Principal, a.Receiver, a.GenOpts.PrincipalIsNullable())
 }
 
+var AlwaysOmitEmpty bool
+
 func (a *appGenerator) makeCodegenApp() (GenApp, error) {
 	log.Println("building a plan for generation")
+	log.Printf("AlwaysOmitEmpty: %v", a.GenOpts.AlwaysOmitEmpty)
+	AlwaysOmitEmpty = a.GenOpts.AlwaysOmitEmpty
 
 	sw := a.SpecDoc.Spec()
 	receiver := a.Receiver

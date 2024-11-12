@@ -754,7 +754,7 @@ func (b *codeGenOpBuilder) MakeParameter(receiver string, resolver *typeResolver
 		Extensions:       param.Extensions,
 	}
 
-	if goCustomTag, ok := param.Extensions["x-go-custom-tag"]; ok {
+	if goCustomTag, ok := param.Extensions[xGoCustomTag]; ok {
 		customTag, ok := goCustomTag.(string)
 		if !ok {
 			return GenParameter{}, fmt.Errorf(`%s %s, parameter %q: "x-go-custom-tag" field must be a string, not a %T`,
