@@ -114,7 +114,7 @@ func (g GenSchema) renderMarshalTag() string {
 
 	result.WriteString(g.OriginalName)
 
-	if !g.Required && g.IsEmptyOmitted {
+	if AlwaysOmitEmpty || (!g.Required && g.IsEmptyOmitted) {
 		result.WriteString(",omitempty")
 	}
 
