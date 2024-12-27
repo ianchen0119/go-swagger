@@ -8,7 +8,7 @@
 {{- else }}
   {{- if and (not .IsMap) .IsNullable (not .IsSuperAlias) }}*{{ end }}
   {{- if .IsSuperAlias }} = {{ end }}
-  {{- .GoType }} {{ .PrintTags }}
+  {{ .GoType }} {{ .PrintTags }}
 {{ end }}
 {{ end }}
 
